@@ -127,6 +127,9 @@ void getTurn(char arr[][SIZE]) {
     }
 }
 
+
+
+
 bool gamefinish(char arr[][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
         if (arr[i][0] == 'X' || arr[i][0] == 'O') {
