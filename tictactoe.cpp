@@ -61,6 +61,17 @@ void getTurn(char arr[][SIZE]) {
             cout << "Player 2's turn: ";
         }
         cin >> col >> row;
+        while ((col != 'A' && col != 'B' && col != 'C') || (row != 0 && row != 1 && row != 2)) {
+            cout << "Illegal move. Please try again. " << endl;;
+            printboard(arr);
+            if (player1turn) {
+            cout << "Player 1's turn: ";
+            }
+            else {
+                cout << "Player 2's turn: ";
+            }
+            cin >> col >> row;
+        }
         cout << endl;
         if (col == 'A') {
             columnnumber = 0;
@@ -70,6 +81,27 @@ void getTurn(char arr[][SIZE]) {
         }
         else {
             columnnumber = 2;
+        }
+        while (arr[row][columnnumber] != ' ') {
+            cout << "Illegal move. Please try again. " << endl;;
+            printboard(arr);
+            if (player1turn) {
+            cout << "Player 1's turn: ";
+            }
+            else {
+                cout << "Player 2's turn: ";
+            }
+            cin >> col >> row;
+            cout << endl;
+            if (col == 'A') {
+                columnnumber = 0;
+            }
+            else if (col == 'B') {
+                columnnumber = 1;
+            }
+            else {
+                columnnumber = 2;
+            }
         }
         if (player1turn) {
             arr[row][columnnumber] = 'X';
