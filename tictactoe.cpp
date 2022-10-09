@@ -9,6 +9,7 @@ void printboard(char arr[][SIZE]);
 void welcomescreen();
 void getTurn(char arr[][SIZE]);
 bool gamefinish(char arr[][SIZE]);
+bool isFull(char arr[][SIZE]);
 
 int main() {
     char arr[SIZE][SIZE] = {};
@@ -19,9 +20,6 @@ int main() {
     }
     welcomescreen();
     printboard(arr);
-    if (gamefinish(arr)){
-        cout << "yo there";
-    }
     getTurn(arr);
     return 0;
 }
@@ -52,7 +50,7 @@ void printboard(char arr[][SIZE]) {
 
 void getTurn(char arr[][SIZE]) {
     bool player1turn = true;
-    while (!gamefinish(arr)) {
+    while (!gamefinish(arr) && !isFull(arr)) {
         int row;
         char col;
         int columnnumber;
@@ -84,16 +82,20 @@ void getTurn(char arr[][SIZE]) {
         printboard(arr);
         cout << endl;
     }
-    if (player1turn) {
-        cout << "GAME OVER. Player 2 won!";
+    if (gamefinish(arr)) {
+        if (player1turn) {
+            cout << "GAME OVER. Player 2 won!";
+        }
+        else {
+            cout << "GAME OVER. Player 1 won!";
+        }
     }
-    else {
-        cout << "GAME OVER. Player 1 won!";
+    else if (isFull(arr)) {
+        cout << "GAME OVER. There is a tie.";
     }
 }
 
 bool gamefinish(char arr[][SIZE]) {
-    int count = 0;
     for (int i = 0; i < SIZE; i++) {
         if (arr[i][0] == 'X' || arr[i][0] == 'O') {
             if (arr[i][0] == arr[i][1] && arr[i][0] == arr[i][2]) {
@@ -121,17 +123,19 @@ bool gamefinish(char arr[][SIZE]) {
     }
     if (arr[SIZE - 1][0] == 'X' || arr[SIZE - 1][0] == 'O') {
         bool diagonalbackwards = true;
-        for (int k = 0; k < SIZE; k++) {
-            if (arr[SIZE - k - 1][k] == 'X' || arr[SIZE - k - 1][k] == 'O') {
-                if (arr[SIZE - k - 1][k] != arr[SIZE - k - 1][k + 1]) {
-                    diagonalbackwards = false;
-                }
+        for (int k = 0; k < SIZE - 1; k++) {
+            if (arr[SIZE - k - 1][k] != arr[SIZE - k - 2][k + 1]) {
+                diagonalbackwards = false;
             }
         }
         if (diagonalbackwards) {
             return true;
         }
     }
+    return false;
+}
+
+bool isFull(char arr[][SIZE]) {
     bool full = true;
     for (int a = 0; a < SIZE; a++) {
         for (int b = 0; b < SIZE; b++) {
